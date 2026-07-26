@@ -1,0 +1,18 @@
+.show-details {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.show-details img {
+  width: 300px;
+  border-radius: 12px;
+}
+
+.show-details h1 {
+  margin-top: 20px;
+}
+
+.show-details p {
+  line-height: 1.6;
+}
