@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
+import "./Navbar.css";
 
 function Navbar() {
   return (
-    <nav>
-      <h2>Podcast App</h2>
+    <nav className="navbar">
+      <div className="logo">
+        <h2>🎧 Podcast App</h2>
+      </div>
 
-      <div>
+      <div className="nav-links">
         <Link to="/">Home</Link>
-        {" | "}
         <Link to="/favorites">Favorites</Link>
       </div>
     </nav>

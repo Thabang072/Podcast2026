@@ -1,0 +1,26 @@
+.podcast-card {
+  border-radius: 15px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,.1);
+  transition: .3s;
+  cursor: pointer;
+}
+
+.podcast-card:hover {
+  transform: translateY(-8px);
+}
+
+.podcast-card img {
+  width: 100%;
+  display: block;
+}
+
+.podcast-card h3 {
+  padding: 15px 15px 5px;
+}
+
+.podcast-card p {
+  padding: 0 15px 20px;
+  color: gray;
+}
