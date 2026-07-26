@@ -24,3 +24,7 @@
   padding: 0 15px 20px;
   color: gray;
 }
+.podcast-link {
+  text-decoration: none;
+  color: inherit;
+}

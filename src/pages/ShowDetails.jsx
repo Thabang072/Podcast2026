@@ -1,5 +1,15 @@
-function showDetails() {
-    return <h1>Show Details Page</h1>;
+import { useParams } from "react-router-dom";
+
+function ShowDetails() {
+  const { id } = useParams();
+
+  return (
+    <div>
+      <h1>Podcast Details</h1>
+
+      <h2>Podcast ID: {id}</h2>
+    </div>
+  );
 }
 
-export default showDetails;
+export default ShowDetails;
