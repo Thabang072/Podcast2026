@@ -1,18 +1,38 @@
 .show-details {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 40px auto;
   padding: 20px;
+
+  display: flex;
+  gap: 40px;
 }
 
-.show-details img {
+.show-image {
   width: 300px;
-  border-radius: 12px;
+  border-radius: 15px;
 }
 
-.show-details h1 {
-  margin-top: 20px;
+.show-info {
+  flex: 1;
 }
 
-.show-details p {
-  line-height: 1.6;
+.show-info h1 {
+  margin-bottom: 20px;
+}
+
+.show-info p {
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .show-details {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .show-image {
+    width: 250px;
+  }
 }

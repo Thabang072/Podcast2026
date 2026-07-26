@@ -8,26 +8,42 @@ function ShowDetails() {
 
   const [show, setShow] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchShow() {
+    const fetchShow = async () => {
       try {
+        setLoading(true);
+        setError("");
+
         const response = await fetch(getShowURL(id));
+
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+
         const data = await response.json();
 
+        console.log("Podcast Data:", data);
+
         setShow(data);
-      } catch (error) {
-        console.error("Error fetching show:", error);
+      } catch (err) {
+        console.error(err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchShow();
   }, [id]);
 
   if (loading) {
     return <h2>Loading podcast...</h2>;
+  }
+
+  if (error) {
+    return <h2>{error}</h2>;
   }
 
   if (!show) {
@@ -39,16 +55,35 @@ function ShowDetails() {
       <img
         src={show.image}
         alt={show.title}
-        width="300"
+        className="show-image"
       />
 
-      <h1>{show.title}</h1>
+      <div className="show-info">
+        <h1>{show.title}</h1>
 
-      <p>{show.description}</p>
+        <p>{show.description}</p>
 
-      <p>
-        <strong>Seasons:</strong> {show.seasons.length}
-      </p>
+        <p>
+          <strong>Seasons:</strong>{" "}
+          {show.seasons ? show.seasons.length : 0}
+        </p>
+
+        <h2>Seasons</h2>
+
+        {show.seasons?.map((season, index) => (
+          <div key={index} className="season-card">
+            <img
+              src={season.image}
+              alt={season.title}
+              className="season-image"
+            />
+
+            <h3>{season.title}</h3>
+
+            <p>Episodes: {season.episodes.length}</p>
+          </div>
+        ))}
+      </div>
     </main>
   );
 }
