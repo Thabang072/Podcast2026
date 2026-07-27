@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
-import SearchBar from "../components/SearchBar";
+
 import PodcastCard from "../components/PodcastCard";
+import SearchBar from "../components/SearchBar";
+
 import { SHOWS_URL } from "../services/api";
+
 import "./Home.css";
 
 function Home() {
   const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchShows() {
@@ -16,7 +20,7 @@ function Home() {
 
         setShows(data);
       } catch (error) {
-        console.error("Error fetching shows:", error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -24,6 +28,10 @@ function Home() {
 
     fetchShows();
   }, []);
+
+  const filteredShows = shows.filter((show) =>
+    show.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (loading) {
     return <h2>Loading podcasts...</h2>;
@@ -33,18 +41,25 @@ function Home() {
     <main className="home">
       <section className="hero">
         <h1>Discover Your Next Favorite Podcast</h1>
+
         <p>
-          Browse thousands of podcasts from different genres and start
-          listening today.
+          Browse thousands of podcasts and start listening today.
         </p>
 
-        <SearchBar />
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
       </section>
 
       <section className="podcast-grid">
-        {shows.map((show) => (
-          <PodcastCard key={show.id} show={show} />
-        ))}
+        {filteredShows.length > 0 ? (
+          filteredShows.map((show) => (
+            <PodcastCard key={show.id} show={show} />
+          ))
+        ) : (
+          <h2>No podcasts found.</h2>
+        )}
       </section>
     </main>
   );
