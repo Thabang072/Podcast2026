@@ -1,38 +1,26 @@
 .show-details {
-  max-width: 1100px;
-  margin: 40px auto;
-  padding: 20px;
-
-  display: flex;
-  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px;
 }
 
 .show-image {
-  width: 300px;
-  border-radius: 15px;
-}
-
-.show-info {
-  flex: 1;
-}
-
-.show-info h1 {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  display: block;
   margin-bottom: 20px;
 }
 
-.show-info p {
-  line-height: 1.7;
-  margin-bottom: 15px;
+.season-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
 }
 
-@media (max-width: 768px) {
-  .show-details {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .show-image {
-    width: 250px;
-  }
+.episode-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
