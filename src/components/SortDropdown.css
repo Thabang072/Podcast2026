@@ -1,0 +1,19 @@
+.sort-dropdown {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.sort-dropdown label {
+  font-weight: 600;
+}
+
+.sort-dropdown select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-size: 15px;
+}
