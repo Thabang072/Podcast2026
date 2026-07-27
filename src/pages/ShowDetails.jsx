@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import podcasts from "../data/podcasts";
 
 import SeasonCard from "../components/SeasonCard";
@@ -6,8 +7,11 @@ import EpisodeCard from "../components/EpisodeCard";
 
 import "./ShowDetails.css";
 
-function ShowDetails() {
-  // Temporary: use the first podcast from our mock data
+function ShowDetails({
+  setCurrentEpisode,
+  favorites,
+  handleFavorite,
+}) {
   const show = podcasts[0];
 
   const [selectedSeason, setSelectedSeason] = useState(null);
@@ -45,7 +49,11 @@ function ShowDetails() {
               <EpisodeCard
                 key={episode.id}
                 episode={episode}
-                onPlay={(episode) => console.log("Play:", episode)}
+                onPlay={setCurrentEpisode}
+                onFavorite={handleFavorite}
+                isFavorite={favorites.some(
+                  (item) => item.id === episode.id
+                )}
               />
             ))}
           </div>

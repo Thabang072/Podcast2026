@@ -1,13 +1,34 @@
-function EpisodeCard({ episode, onPlay }) {
+import "./EpisodeCard.css";
+
+function EpisodeCard({
+  episode,
+  onPlay,
+  onFavorite,
+  isFavorite,
+}) {
   return (
     <div className="episode-card">
-      <h3>{episode.title}</h3>
+      <div className="episode-info">
+        <h3>{episode.title}</h3>
 
-      <p>{episode.description}</p>
+        <p>{episode.description}</p>
+      </div>
 
-      <button onClick={() => onPlay(episode)}>
-        ▶ Play Episode
-      </button>
+      <div className="episode-actions">
+        <button
+          className="play-btn"
+          onClick={() => onPlay(episode)}
+        >
+          ▶ Play
+        </button>
+
+        <button
+          className="favorite-btn"
+          onClick={() => onFavorite(episode)}
+        >
+          {isFavorite ? "❤️" : "🤍"}
+        </button>
+      </div>
     </div>
   );
 }
