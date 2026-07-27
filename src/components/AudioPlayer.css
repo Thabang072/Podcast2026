@@ -4,19 +4,65 @@
   left: 0;
   width: 100%;
 
-  background: #202020;
+  background: #181818;
   color: white;
 
-  padding: 20px;
+  padding: 20px 30px;
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
 }
 
-.audio-player button {
-  padding: 12px 25px;
+.audio-title {
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.controls button {
+  width: 50px;
+  height: 50px;
+
   border: none;
-  border-radius: 8px;
+  border-radius: 50%;
+
+  background: #ffffff;
   cursor: pointer;
-  font-size: 16px;
+
+  font-size: 20px;
+  transition: 0.2s;
+}
+
+.controls button:hover {
+  transform: scale(1.05);
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.progress input {
+  flex: 1;
+}
+
+.volume-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.volume-container input {
+  width: 180px;
 }
