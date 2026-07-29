@@ -9,13 +9,16 @@ function AudioPlayer({ currentEpisode }) {
   const [duration, setDuration] = useState(0);
 
   useEffect(() => {
-    if (audioRef.current && currentEpisode) {
-      audioRef.current.load();
+    if (!audioRef.current || !currentEpisode) return;
 
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch((err) => console.error(err));
-    }
+    setCurrentTime(0);
+
+    audioRef.current.load();
+
+    audioRef.current
+      .play()
+      .then(() => setIsPlaying(true))
+      .catch((err) => console.error(err));
   }, [currentEpisode]);
 
   useEffect(() => {
@@ -31,25 +34,54 @@ function AudioPlayer({ currentEpisode }) {
       setDuration(audio.duration);
     };
 
+    const handleEnded = () => {
+      setIsPlaying(false);
+      setCurrentTime(0);
+    };
+
     audio.addEventListener("timeupdate", updateTime);
     audio.addEventListener("loadedmetadata", updateDuration);
+    audio.addEventListener("ended", handleEnded);
 
     return () => {
       audio.removeEventListener("timeupdate", updateTime);
       audio.removeEventListener("loadedmetadata", updateDuration);
+      audio.removeEventListener("ended", handleEnded);
     };
   }, []);
 
   function togglePlay() {
     if (!audioRef.current) return;
 
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
+    if (audioRef.current.paused) {
       audioRef.current.play();
+      setIsPlaying(true);
+    } else {
+      audioRef.current.pause();
+      setIsPlaying(false);
     }
+  }
 
-    setIsPlaying(!isPlaying);
+  function rewind() {
+    if (!audioRef.current) return;
+
+    audioRef.current.currentTime = Math.max(
+      audioRef.current.currentTime - 10,
+      0
+    );
+
+    setCurrentTime(audioRef.current.currentTime);
+  }
+
+  function forward() {
+    if (!audioRef.current) return;
+
+    audioRef.current.currentTime = Math.min(
+      audioRef.current.currentTime + 10,
+      duration
+    );
+
+    setCurrentTime(audioRef.current.currentTime);
   }
 
   function formatTime(time) {
@@ -61,20 +93,30 @@ function AudioPlayer({ currentEpisode }) {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   }
 
+  if (!currentEpisode) {
+    return (
+      <div className="audio-player">
+        <p>Select an episode to play.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="audio-player">
-      <h3 className="audio-title">
-        {currentEpisode.title}
-      </h3>
+      <h3>{currentEpisode.title}</h3>
 
       <audio ref={audioRef}>
         <source src={currentEpisode.audio} type="audio/mpeg" />
       </audio>
 
       <div className="controls">
+        <button onClick={rewind}>⏪ 10s</button>
+
         <button onClick={togglePlay}>
-          {isPlaying ? "⏸" : "▶"}
+          {isPlaying ? "⏸ Pause" : "▶ Play"}
         </button>
+
+        <button onClick={forward}>10s ⏩</button>
       </div>
 
       <div className="progress">
@@ -85,7 +127,11 @@ function AudioPlayer({ currentEpisode }) {
           min="0"
           max={duration || 0}
           value={currentTime}
-          readOnly
+          onChange={(e) => {
+            const time = Number(e.target.value);
+            audioRef.current.currentTime = time;
+            setCurrentTime(time);
+          }}
         />
 
         <span>{formatTime(duration)}</span>
